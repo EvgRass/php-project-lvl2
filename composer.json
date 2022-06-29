@@ -1,0 +1,21 @@
+{
+    "name": "hexlet/code",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Hexlet\\Code\\": "src/"
+        },
+        "files": [
+            "src/gendiff.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "evgrass",
+            "email": "johnrass@yandex.ru"
+        }
+    ],
+    "require": {
+        "docopt/docopt": "^1.0"
+    }
+}
