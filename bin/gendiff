@@ -11,4 +11,25 @@ if (file_exists($autoloadPath1)) {
     require_once $autoloadPath2;
 }
 
-gendiff();
+$doc = <<<DOC
+  Generate diff
+  Usage:
+    gendiff (-h|--help)
+    gendiff (-v|--version)
+    gendiff [--format <fmt>] <firstFile> <secondFile>
+  Options:
+    -h --help                     Show this screen
+    -v --version                  Show version
+    --format <fmt>                Report format [default: stylish] 
+  DOC;
+
+$params = [
+      'vesion' => 'Rassolka 1.0',
+  ];
+$args = \Docopt::handle($doc, $params);
+
+$firstFile = $args->args['<firstFile>'];
+$secondFile = $args->args['<secondFile>'];
+$format = $args->args['--format'];
+
+gendiff($firstFile, $secondFile, $format);
