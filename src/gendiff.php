@@ -58,25 +58,27 @@ function getDiffTree(array $firstFileData, array $secondFileData): array
 function format(string $format, array $tree)
 {
     if ($format === 'stylish') {
-        $acc = [];
+        $acc = "{";
         foreach ($tree as $k => $item) {
             switch ($item['type']) {
                 case 'removed':
-                    $acc["- " . $item['name']] = $item['value'];
+                    $acc .= "\n  - {$item['name']}: {$item['value']}";
                     break;
                 case 'added':
-                    $acc["+ " . $item['name']] = $item['value'];
+                    $acc .= "\n  + {$item['name']}: {$item['value']}";
                     break;
                 case 'changed':
-                    $acc["- " . $item['name']] = $item['valueFirst']; 
-                    $acc["+ " . $item['name']] = $item['valueSecond'];
+                    $acc .= "\n  - {$item['name']}: {$item['valueFirst']}"; 
+                    $acc .= "\n  + {$item['name']}: {$item['valueSecond']}";
                     break;
                 case 'unchanged':
-                    $acc[$item['name']] = $item['value'];
+                    $acc .= "\n    {$item['name']}: {$item['value']}";
                     break;
             }
         }
-        return json_encode($acc);
+        $acc .= "\n}\n";
+
+        return $acc;
     }
     
 }
