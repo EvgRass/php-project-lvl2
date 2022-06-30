@@ -23,13 +23,10 @@ $doc = <<<DOC
     --format <fmt>                Report format [default: stylish] 
   DOC;
 
-$params = [
-      'vesion' => 'Rassolka 1.0',
-  ];
-$args = \Docopt::handle($doc, $params);
+$args = \Docopt::handle($doc);
 
-$firstFile = $args->args['<firstFile>'];
-$secondFile = $args->args['<secondFile>'];
+$firstFile = getcwd() . $args->args['<firstFile>'];
+$secondFile = getcwd() . $args->args['<secondFile>'];
 $format = $args->args['--format'];
 
-gendiff($firstFile, $secondFile, $format);
+print_r(gendiff($firstFile, $secondFile, $format));
