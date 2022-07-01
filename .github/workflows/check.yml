@@ -1,4 +1,4 @@
-name: check
+name: evgrass-check
 on:   
   - push
   - pull_request       
