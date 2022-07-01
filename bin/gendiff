@@ -26,11 +26,11 @@ DOC;
 $args = Docopt::handle($doc, array('version'=>'1.0'));
 
 try {
-  $firstFile = getcwd() . $args->args['<firstFile>'];
-  $secondFile = getcwd() . $args->args['<secondFile>'];
+  $pathFirstFile = __DIR__ . "/../tests/fixtures/" . $args->args['<firstFile>'];
+  $pathSecondFile = __DIR__ . "/../tests/fixtures/" . $args->args['<secondFile>'];
   $format = $args->args['--format'];
 
-  $result = gendiff($firstFile, $secondFile, $format);
+  $result = gendiff($pathFirstFile, $pathSecondFile, $format);
 } catch (\Exception $e) {
   exit("Error: {$e->getMessage()}\n");
 }

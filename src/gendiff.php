@@ -68,7 +68,7 @@ function format(string $format, array $tree)
                     $acc .= "\n  + {$item['name']}: {$item['value']}";
                     break;
                 case 'changed':
-                    $acc .= "\n  - {$item['name']}: {$item['valueFirst']}"; 
+                    $acc .= "\n  - {$item['name']}: {$item['valueFirst']}";
                     $acc .= "\n  + {$item['name']}: {$item['valueSecond']}";
                     break;
                 case 'unchanged':
@@ -80,5 +80,4 @@ function format(string $format, array $tree)
 
         return $acc;
     }
-    
 }
