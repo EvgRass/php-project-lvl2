@@ -1,1 +1,1 @@
-C:37:"PHPUnit\Runner\DefaultTestResultCache":93:{a:2:{s:7:"defects";a:0:{}s:5:"times";a:1:{s:33:"Differ\Tests\DifferTest::testJson";d:0.005;}}}
+{"version":1,"defects":[],"times":{"Differ\\Tests\\DifferTest::testJson":0.003}}
