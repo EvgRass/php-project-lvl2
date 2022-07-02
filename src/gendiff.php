@@ -90,5 +90,6 @@ function stringify($data): string
     if (is_bool($data)) {
         return $data ? 'true' : 'false';
     }
+    
     return $data;
 }
