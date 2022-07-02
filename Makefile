@@ -1,4 +1,4 @@
 install:
-	composer install --prefer-dist --no-progress
+	composer install
 lint:
 	composer exec --verbose phpcs -- --standard=PSR12 src bin

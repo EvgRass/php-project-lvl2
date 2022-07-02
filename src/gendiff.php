@@ -1,10 +1,10 @@
 <?php
 
-namespace Gendiff;
+namespace Differ\Gendiff;
 
 use function Functional\flatten;
 
-function gendiff(string $pathFirstFile, string $pathSecondFile, string $format)
+function gendiff(string $pathFirstFile, string $pathSecondFile, string $format = 'stylish'): string
 {
     $firstFileData = getFileData($pathFirstFile);
     $secondFileData = getFileData($pathSecondFile);
@@ -55,29 +55,40 @@ function getDiffTree(array $firstFileData, array $secondFileData): array
     }, $uniqKeys);
 }
 
-function format(string $format, array $tree)
+function format(string $format, array $tree): string
 {
     if ($format === 'stylish') {
         $acc = "{";
         foreach ($tree as $k => $item) {
             switch ($item['type']) {
                 case 'removed':
-                    $acc .= "\n  - {$item['name']}: {$item['value']}";
+                    $acc .= "\n  - {$item['name']}: " . stringify($item['value']);
                     break;
                 case 'added':
-                    $acc .= "\n  + {$item['name']}: {$item['value']}";
+                    $acc .= "\n  + {$item['name']}: " . stringify($item['value']);
                     break;
                 case 'changed':
-                    $acc .= "\n  - {$item['name']}: {$item['valueFirst']}";
-                    $acc .= "\n  + {$item['name']}: {$item['valueSecond']}";
+                    $acc .= "\n  - {$item['name']}: " . stringify($item['valueFirst']);
+                    $acc .= "\n  + {$item['name']}: " . stringify($item['valueSecond']);
                     break;
                 case 'unchanged':
-                    $acc .= "\n    {$item['name']}: {$item['value']}";
+                    $acc .= "\n    {$item['name']}: " . stringify($item['value']);
                     break;
             }
         }
-        $acc .= "\n}\n";
+        $acc .= "\n}";
 
         return $acc;
     }
+}
+
+function stringify($data): string
+{
+    if (is_null($data)) {
+        return 'null';
+    }
+    if (is_bool($data)) {
+        return $data ? 'true' : 'false';
+    }
+    return $data;
 }
