@@ -1,6 +1,9 @@
 {
     "name": "hexlet/code",
     "license": "MIT",
+    "bin": [
+        "bin/gendiff"
+    ],
     "autoload": {
         "psr-4": {
             "Hexlet\\Code\\": "src/"
