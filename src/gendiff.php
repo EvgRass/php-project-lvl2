@@ -2,12 +2,12 @@
 
 namespace Differ\Gendiff;
 
-use function Functional\flatten;
+use function Differ\Parsers\parseData;
 
 function gendiff(string $pathFirstFile, string $pathSecondFile, string $format = 'stylish'): string
 {
-    $firstFileData = getFileData($pathFirstFile);
-    $secondFileData = getFileData($pathSecondFile);
+    $firstFileData = parseData(getFileData($pathFirstFile));
+    $secondFileData = parseData(getFileData($pathSecondFile));
 
     $tree = getDiffTree($firstFileData, $secondFileData);
 
@@ -16,7 +16,13 @@ function gendiff(string $pathFirstFile, string $pathSecondFile, string $format =
 
 function getFileData(string $pathFile): array
 {
-    return json_decode(file_get_contents($pathFile), 1);
+    if (!file_exists($pathFile)) {
+        throw new \Exception("File {$pathFile} does not exist!");
+    }
+    $extension = pathinfo($pathFile, PATHINFO_EXTENSION);
+    $data = file_get_contents($pathFile);
+
+    return ['extension' => $extension, 'data' => $data];
 }
 
 function getDiffTree(array $firstFileData, array $secondFileData): array
