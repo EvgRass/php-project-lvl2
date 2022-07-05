@@ -10,7 +10,7 @@ function parseData(array $dataFile): array
     switch ($extension) {
         case 'yml':
         case 'yaml':
-            return (array) Yaml::parse($data, Yaml::PARSE_OBJECT_FOR_MAP);
+            return Yaml::parse($data, Yaml::PARSE_CONSTANT);
         case 'json':
             return json_decode($data, 1);
         default:
