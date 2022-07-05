@@ -8,3 +8,7 @@ https://asciinema.org/a/6jIGrpIDOS9qvljWkohfcwnVG
 
 Сравнение плоских файлов (yaml)
 https://asciinema.org/a/vQkApIZQm279gcqVl4yH2gaEE
+
+Рекурсивное сравнение
+https://asciinema.org/a/gYFrxwsM6qbkm7074bOvXsG0r
+https://asciinema.org/connect/06841bd1-8747-4953-8a37-9e1f8da3f7e4
