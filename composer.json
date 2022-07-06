@@ -10,7 +10,10 @@
         },
         "files": [
             "src/gendiff.php",
-            "src/parsers.php"
+            "src/parsers.php",
+            "src/Formatters/stylish.php",
+            "src/Formatters/plain.php",
+            "src/Formatters.php"
         ]
     },
     "authors": [

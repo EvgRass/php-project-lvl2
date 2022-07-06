@@ -21,6 +21,12 @@ class DifferTest extends TestCase
         $secondPathFile = $this->getPathToFixture('filepath2.json');
         $result2 = gendiff($firstPathFile, $secondPathFile);
         $this->assertStringEqualsFile($correctDiff2, $result2);
+
+        $correctDiff3 = $this->getPathToFixture('correctDiff3');
+        $firstPathFile = $this->getPathToFixture('filepath1.json');
+        $secondPathFile = $this->getPathToFixture('filepath2.json');
+        $result3 = gendiff($firstPathFile, $secondPathFile, 'plain');
+        $this->assertStringEqualsFile($correctDiff3, $result3);
     }
 
     public function testYml()
@@ -36,6 +42,12 @@ class DifferTest extends TestCase
         $secondPathFile = $this->getPathToFixture('filepath2.yml');
         $result = genDiff($firstPathFile, $secondPathFile);
         $this->assertStringEqualsFile($correctDiff, $result);
+
+        $correctDiff3 = $this->getPathToFixture('correctDiff3');
+        $firstPathFile = $this->getPathToFixture('filepath1.yml');
+        $secondPathFile = $this->getPathToFixture('filepath2.yml');
+        $result3 = gendiff($firstPathFile, $secondPathFile, 'plain');
+        $this->assertStringEqualsFile($correctDiff3, $result3);
     }
 
     private function getPathToFixture($fixtureName)
