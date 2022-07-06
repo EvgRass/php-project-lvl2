@@ -11,3 +11,6 @@ https://asciinema.org/a/vQkApIZQm279gcqVl4yH2gaEE
 
 Рекурсивное сравнение
 https://asciinema.org/a/gYFrxwsM6qbkm7074bOvXsG0r
+
+Плоский формат
+https://asciinema.org/a/BLajMcsGWlwOBl0LQKbOnhTh5
