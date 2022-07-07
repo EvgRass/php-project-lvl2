@@ -6,31 +6,30 @@ use function Differ\Differ\getDiffTree;
 
 function stylish(array $tree, int $int = 0): string
 {
-    $int = $int + 4;
     $plus   = "  + ";
     $minus  = "  - ";
-    $equal1  = str_repeat(" ", $int - 4);
-    $equal2  = str_repeat(" ", $int);
+    $equal1  = str_repeat(" ", $int);
+    $equal2  = str_repeat(" ", $int + 4);
 
     $res = array_reduce($tree, function ($acc, $item) use ($int, $plus, $minus, $equal1, $equal2) {
         switch ($item['type']) {
             case 'removed':
                 return  $acc . PHP_EOL . $equal1 . $minus . $item['name'] . ": " .
-                        stringify($item['value'], " ", 4, $int);
+                        stringify($item['value'], " ", 4, $int + 4);
             case 'added':
                 return  $acc . PHP_EOL . $equal1 . $plus . $item['name'] . ": " .
-                        stringify($item['value'], " ", 4, $int);
+                        stringify($item['value'], " ", 4, $int + 4);
             case 'nested':
                 return  $acc . PHP_EOL . $equal2 . $item['name'] . ": " .
-                        stylish($item['children'], $int);
+                        stylish($item['children'], $int + 4);
             case 'changed':
                 return  $acc . PHP_EOL . $equal1 . $minus . $item['name'] . ": " .
-                        stringify($item['valueFirst'], " ", 4, $int) .
+                        stringify($item['valueFirst'], " ", 4, $int + 4) .
                         PHP_EOL . $equal1 . $plus . $item['name'] . ": " .
-                        stringify($item['valueSecond'], " ", 4, $int);
+                        stringify($item['valueSecond'], " ", 4, $int + 4);
             case 'unchanged':
                 return  $acc . PHP_EOL . $equal2 . $item['name'] . ": " .
-                        stringify($item['value'], " ", 4, $int);
+                        stringify($item['value'], " ", 4, $int + 4);
         }
         return $acc;
     }, "{");

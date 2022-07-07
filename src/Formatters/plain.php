@@ -29,7 +29,7 @@ function plain(array $tree, string $parents = ''): string
     return implode(PHP_EOL, $res);
 }
 
-function stringify($data): string
+function stringify($data)
 {
     if (is_null($data)) {
         return 'null';
