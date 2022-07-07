@@ -6,7 +6,6 @@ use function Differ\Differ\getDiffTree;
 
 function stylish(array $tree, int $int = 0): string
 {
-    // print_r($tree);
     $int += 4;
     $plus   = "  + ";
     $minus  = "  - ";
@@ -16,23 +15,22 @@ function stylish(array $tree, int $int = 0): string
     $res = array_reduce($tree, function ($acc, $item) use ($int, $plus, $minus, $equal1, $equal2) {
         switch ($item['type']) {
             case 'removed':
-                $acc .= PHP_EOL . $equal1 . $minus . $item['name'] . ": " . stringify($item['value'], " ", 4, $int);
-                break;
+                return  $acc . PHP_EOL . $equal1 . $minus . $item['name'] . ": " .
+                        stringify($item['value'], " ", 4, $int);
             case 'added':
-                $acc .= PHP_EOL . $equal1 . $plus . $item['name'] . ": " . stringify($item['value'], " ", 4, $int);
-                break;
+                return  $acc . PHP_EOL . $equal1 . $plus . $item['name'] . ": " .
+                        stringify($item['value'], " ", 4, $int);
             case 'nested':
-                $acc .= PHP_EOL . $equal2 . $item['name'] . ": " . stylish($item['children'], $int);
-                break;
+                return  $acc . PHP_EOL . $equal2 . $item['name'] . ": " .
+                        stylish($item['children'], $int);
             case 'changed':
-                $acc .= PHP_EOL . $equal1 . $minus . $item['name'] . ": " .
-                        stringify($item['valueFirst'], " ", 4, $int);
-                $acc .= PHP_EOL . $equal1 . $plus . $item['name'] . ": " .
+                return  $acc . PHP_EOL . $equal1 . $minus . $item['name'] . ": " .
+                        stringify($item['valueFirst'], " ", 4, $int) .
+                        PHP_EOL . $equal1 . $plus . $item['name'] . ": " .
                         stringify($item['valueSecond'], " ", 4, $int);
-                break;
             case 'unchanged':
-                $acc .= PHP_EOL . $equal2 . $item['name'] . ": " . stringify($item['value'], " ", 4, $int);
-                break;
+                return  $acc . PHP_EOL . $equal2 . $item['name'] . ": " .
+                        stringify($item['value'], " ", 4, $int);
         }
         return $acc;
     }, "{");

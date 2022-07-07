@@ -10,22 +10,18 @@ function plain(array $tree, string $parents = ''): string
         $newParents = ($parents !== '') ? $parents . "." . $item['name'] : $item['name'];
         switch ($item['type']) {
             case 'removed':
-                $acc[] = "Property '" . $newParents . "' was removed";
-                break;
+                return [...$acc, "Property '" . $newParents . "' was removed"];
             case 'added':
                 $valAdd = is_array($item['value']) ? "[complex value]" : stringify($item['value']);
-                $acc[] = "Property '" . $newParents . "' was added with value: " . $valAdd;
-                break;
+                return [...$acc, "Property '" . $newParents . "' was added with value: " . $valAdd];
             case 'nested':
-                $acc[] = plain($item['children'], $newParents);
-                break;
+                return [...$acc, plain($item['children'], $newParents)];
             case 'changed':
                 $valFirst = is_array($item['valueFirst']) ? "[complex value]" :
                         stringify($item['valueFirst']);
                 $valSecond = is_array($item['valueSecond']) ? "[complex value]" :
                         stringify($item['valueSecond']);
-                $acc[] = "Property '" . $newParents . "' was updated. From " . $valFirst . " to " . $valSecond;
-                break;
+                return [...$acc, "Property '" . $newParents . "' was updated. From " . $valFirst . " to " . $valSecond];
         }
         return $acc;
     }, []);
