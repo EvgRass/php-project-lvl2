@@ -6,7 +6,7 @@ use function Differ\Differ\getDiffTree;
 
 function stylish(array $tree, int $int = 0): string
 {
-    $int += 4;
+    $int = $int + 4;
     $plus   = "  + ";
     $minus  = "  - ";
     $equal1  = str_repeat(" ", $int - 4);

@@ -31,14 +31,16 @@ function plain(array $tree, string $parents = ''): string
 
 function stringify($data): string
 {
-    $str = '';
     if (is_null($data)) {
-        $str = 'null';
-    } elseif (!is_array($data)) {
-        $str = trim(var_export($data, true), "'");
+        return 'null';
     }
-    if ($str === "true" || $str === "false" || $str === "null" || is_numeric($data)) {
-        return $str;
+    if (is_bool($data)) {
+        return $data ? 'true' : 'false';
     }
-    return "'" . $str . "'";
+    if (is_numeric($data)) {
+        return $data;
+    }
+    if (!is_array($data)) {
+        return "'" . trim(var_export($data, true), "'") . "'";
+    }
 }
