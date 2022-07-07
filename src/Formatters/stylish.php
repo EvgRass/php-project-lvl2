@@ -37,7 +37,7 @@ function stylish(array $tree, int $int = 0): string
     return $res . PHP_EOL . $equal1 . "}";
 }
 
-function stringify($data, string $replacer = " ", int $spacesCount = 1, int $startSpace = 0): string
+function stringify(mixed $data, string $replacer = " ", int $spacesCount = 1, int $startSpace = 0): string
 {
     $strfn = function ($data, $spCount) use (&$strfn, $replacer, $spacesCount, $startSpace) {
         if (is_null($data)) {

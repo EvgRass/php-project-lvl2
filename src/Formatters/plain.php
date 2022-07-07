@@ -29,18 +29,11 @@ function plain(array $tree, string $parents = ''): string
     return implode(PHP_EOL, $res);
 }
 
-function stringify($data)
+function stringify(mixed $data): string
 {
     if (is_null($data)) {
         return 'null';
     }
-    if (is_bool($data)) {
-        return $data ? 'true' : 'false';
-    }
-    if (is_numeric($data)) {
-        return $data;
-    }
-    if (!is_array($data)) {
-        return "'" . trim(var_export($data, true), "'") . "'";
-    }
+
+    return var_export($data, true);
 }
