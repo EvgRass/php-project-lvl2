@@ -12,7 +12,7 @@ function parseData(array $dataFile): array
         case 'yaml':
             return Yaml::parse($data, Yaml::PARSE_CONSTANT);
         case 'json':
-            return json_decode($data, 1);
+            return json_decode($data, true);
         default:
             throw new \Exception("Extension {$extension} not supported!");
     }
