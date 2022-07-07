@@ -4,10 +4,9 @@ namespace Differ\Formatters\Plain;
 
 use function Differ\Differ\getDiffTree;
 
-function plain(array $tree, $parents = ''): string
+function plain(array $tree, string $parents = ''): string
 {
-    $acc = [];
-    foreach ($tree as $k => $item) {
+    $res = array_reduce($tree, function ($acc, $item) use ($parents) {
         $newParents = ($parents !== '') ? $parents . "." . $item['name'] : $item['name'];
         switch ($item['type']) {
             case 'removed':
@@ -28,12 +27,15 @@ function plain(array $tree, $parents = ''): string
                 $acc[] = "Property '" . $newParents . "' was updated. From " . $valFirst . " to " . $valSecond;
                 break;
         }
-    }
-    return implode(PHP_EOL, $acc);
+        return $acc;
+    }, []);
+
+    return implode(PHP_EOL, $res);
 }
 
-function stringify($data)
+function stringify($data): string
 {
+    $str = '';
     if (is_null($data)) {
         $str = 'null';
     } elseif (!is_array($data)) {

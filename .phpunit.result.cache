@@ -1,1 +1,1 @@
-{"version":1,"defects":{"Differ\\Tests\\DifferTest::testJson":3,"Differ\\Tests\\DifferTest::testYml":3},"times":{"Differ\\Tests\\DifferTest::testJson":0.005,"Differ\\Tests\\DifferTest::testYml":0.005}}
+{"version":1,"defects":{"Differ\\Tests\\DifferTest::testJson":4,"Differ\\Tests\\DifferTest::testYml":3},"times":{"Differ\\Tests\\DifferTest::testJson":0.005,"Differ\\Tests\\DifferTest::testYml":0.005}}

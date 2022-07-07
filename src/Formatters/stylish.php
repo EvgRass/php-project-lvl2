@@ -4,16 +4,16 @@ namespace Differ\Formatters\Stylish;
 
 use function Differ\Differ\getDiffTree;
 
-function stylish(array $tree, $int = 0): string
+function stylish(array $tree, int $int = 0): string
 {
+    // print_r($tree);
     $int += 4;
     $plus   = "  + ";
     $minus  = "  - ";
     $equal1  = str_repeat(" ", $int - 4);
     $equal2  = str_repeat(" ", $int);
 
-    $acc = "{";
-    foreach ($tree as $k => $item) {
+    $res = array_reduce($tree, function ($acc, $item) use ($int, $plus, $minus, $equal1, $equal2) {
         switch ($item['type']) {
             case 'removed':
                 $acc .= PHP_EOL . $equal1 . $minus . $item['name'] . ": " . stringify($item['value'], " ", 4, $int);
@@ -34,13 +34,13 @@ function stylish(array $tree, $int = 0): string
                 $acc .= PHP_EOL . $equal2 . $item['name'] . ": " . stringify($item['value'], " ", 4, $int);
                 break;
         }
-    }
-    $acc .= PHP_EOL . $equal1 . "}";
+        return $acc;
+    }, "{");
 
-    return $acc;
+    return $res . PHP_EOL . $equal1 . "}";
 }
 
-function stringify($data, string $replacer = " ", int $spacesCount = 1, $startSpace = 0): string
+function stringify($data, string $replacer = " ", int $spacesCount = 1, int $startSpace = 0): string
 {
     $strfn = function ($data, $spCount) use (&$strfn, $replacer, $spacesCount, $startSpace) {
         if (is_null($data)) {
@@ -52,9 +52,9 @@ function stringify($data, string $replacer = " ", int $spacesCount = 1, $startSp
         $arr = array_map(fn ($key, $value) =>
             str_repeat($replacer, $startSpace + $spCount) . $key . ": " .
             $strfn($value, $spCount + $spacesCount), array_keys($data), array_values($data));
-        $arr = array_merge(["{"], $arr, [str_repeat($replacer, $startSpace + $spCount - $spacesCount) . "}"]);
+        $array = array_merge(["{"], $arr, [str_repeat($replacer, $startSpace + $spCount - $spacesCount) . "}"]);
 
-        return implode(PHP_EOL, $arr);
+        return implode(PHP_EOL, $array);
     };
 
     return $strfn($data, $spacesCount);
