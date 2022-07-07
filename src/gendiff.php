@@ -2,6 +2,7 @@
 
 namespace Differ\Differ;
 
+use function Functional\sort;
 use function Differ\Parsers\parseData;
 use function Differ\Formatters\Formater\formater;
 
@@ -29,7 +30,7 @@ function getFileData(string $pathFile): array
 function getDiffTree(array $firstFileData, array $secondFileData): array
 {
     $uniqKeys = array_unique(array_merge(array_keys($firstFileData), array_keys($secondFileData)));
-    sort($uniqKeys);
+    $uniqSortKeys = sort($uniqKeys, fn ($a, $b) => $a <=> $b);
 
     return array_map(function ($key) use ($firstFileData, $secondFileData) {
         if (!array_key_exists($key, $secondFileData)) {
@@ -66,5 +67,5 @@ function getDiffTree(array $firstFileData, array $secondFileData): array
             'type' => 'unchanged',
             'value' => $firstFileData[$key]
         ];
-    }, $uniqKeys);
+    }, $uniqSortKeys);
 }
