@@ -2,7 +2,7 @@
 
 namespace Differ\Formatters\Stylish;
 
-use function Differ\Gendiff\getDiffTree;
+use function Differ\Differ\getDiffTree;
 
 function stylish(array $tree, $int = 0): string
 {
@@ -21,16 +21,14 @@ function stylish(array $tree, $int = 0): string
             case 'added':
                 $acc .= PHP_EOL . $equal1 . $plus . $item['name'] . ": " . stringify($item['value'], " ", 4, $int);
                 break;
+            case 'nested':
+                $acc .= PHP_EOL . $equal2 . $item['name'] . ": " . stylish($item['children'], $int);
+                break;
             case 'changed':
-                if (is_array($item['valueFirst']) && is_array($item['valueSecond'])) {
-                    $acc .= PHP_EOL . $equal2 . $item['name'] . ": " .
-                            stylish(getDiffTree($item['valueFirst'], $item['valueSecond']), $int);
-                } else {
-                    $acc .= PHP_EOL . $equal1 . $minus . $item['name'] . ": " .
-                            stringify($item['valueFirst'], " ", 4, $int);
-                    $acc .= PHP_EOL . $equal1 . $plus . $item['name'] . ": " .
-                            stringify($item['valueSecond'], " ", 4, $int);
-                }
+                $acc .= PHP_EOL . $equal1 . $minus . $item['name'] . ": " .
+                        stringify($item['valueFirst'], " ", 4, $int);
+                $acc .= PHP_EOL . $equal1 . $plus . $item['name'] . ": " .
+                        stringify($item['valueSecond'], " ", 4, $int);
                 break;
             case 'unchanged':
                 $acc .= PHP_EOL . $equal2 . $item['name'] . ": " . stringify($item['value'], " ", 4, $int);

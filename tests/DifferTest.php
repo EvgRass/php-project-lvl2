@@ -4,7 +4,7 @@ namespace Differ\Tests;
 
 use PHPUnit\Framework\TestCase;
 
-use function Differ\Gendiff\gendiff;
+use function Differ\Differ\gendiff;
 
 class DifferTest extends TestCase
 {
@@ -27,6 +27,12 @@ class DifferTest extends TestCase
         $secondPathFile = $this->getPathToFixture('filepath2.json');
         $result3 = gendiff($firstPathFile, $secondPathFile, 'plain');
         $this->assertStringEqualsFile($correctDiff3, $result3);
+
+        $correctDiff4 = $this->getPathToFixture('correctDiff4');
+        $firstPathFile = $this->getPathToFixture('filepath1.json');
+        $secondPathFile = $this->getPathToFixture('filepath2.json');
+        $result4 = gendiff($firstPathFile, $secondPathFile, 'json');
+        $this->assertStringEqualsFile($correctDiff4, $result4);
     }
 
     public function testYml()
@@ -48,6 +54,12 @@ class DifferTest extends TestCase
         $secondPathFile = $this->getPathToFixture('filepath2.yml');
         $result3 = gendiff($firstPathFile, $secondPathFile, 'plain');
         $this->assertStringEqualsFile($correctDiff3, $result3);
+
+        $correctDiff4 = $this->getPathToFixture('correctDiff4');
+        $firstPathFile = $this->getPathToFixture('filepath1.yml');
+        $secondPathFile = $this->getPathToFixture('filepath2.yml');
+        $result4 = gendiff($firstPathFile, $secondPathFile, 'json');
+        $this->assertStringEqualsFile($correctDiff4, $result4);
     }
 
     private function getPathToFixture($fixtureName)

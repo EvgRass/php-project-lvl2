@@ -2,31 +2,31 @@
 
 namespace Differ\Formatters\Plain;
 
-use function Differ\Gendiff\getDiffTree;
+use function Differ\Differ\getDiffTree;
 
-function plain(array $tree): string
+function plain(array $tree, $parents = ''): string
 {
+    // print_r($tree);die;
     $acc = [];
     foreach ($tree as $k => $item) {
-        $parent = strlen($item['parent']) !== 0 ? $item['parent'] . "." . $item['name'] : $item['name'];
+        $newParents = ($parents !== '') ? $parents . "." . $item['name'] : $item['name'];
         switch ($item['type']) {
             case 'removed':
-                $acc[] = "Property '" . $parent . "' was removed";
+                $acc[] = "Property '" . $newParents . "' was removed";
                 break;
             case 'added':
                 $valAdd = is_array($item['value']) ? "[complex value]" : stringify($item['value']);
-                $acc[] = "Property '" . $parent . "' was added with value: " . $valAdd;
+                $acc[] = "Property '" . $newParents . "' was added with value: " . $valAdd;
+                break;
+            case 'nested':
+                $acc[] = plain($item['children'], $newParents);
                 break;
             case 'changed':
-                if (is_array($item['valueFirst']) && is_array($item['valueSecond'])) {
-                    $acc[] = plain(getDiffTree($item['valueFirst'], $item['valueSecond'], $parent));
-                } else {
-                    $valFirst = is_array($item['valueFirst']) ? "[complex value]" :
-                            stringify($item['valueFirst']);
-                    $valSecond = is_array($item['valueSecond']) ? "[complex value]" :
-                            stringify($item['valueSecond']);
-                    $acc[] = "Property '" . $parent . "' was updated. From " . $valFirst . " to " . $valSecond;
-                }
+                $valFirst = is_array($item['valueFirst']) ? "[complex value]" :
+                        stringify($item['valueFirst']);
+                $valSecond = is_array($item['valueSecond']) ? "[complex value]" :
+                        stringify($item['valueSecond']);
+                $acc[] = "Property '" . $newParents . "' was updated. From " . $valFirst . " to " . $valSecond;
                 break;
         }
     }

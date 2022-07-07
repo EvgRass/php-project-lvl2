@@ -1,6 +1,6 @@
 <?php
 
-namespace Differ\Gendiff;
+namespace Differ\Differ;
 
 use function Differ\Parsers\parseData;
 use function Differ\Formatters\Formater\formater;
@@ -26,16 +26,15 @@ function getFileData(string $pathFile): array
     return ['extension' => $extension, 'data' => $data];
 }
 
-function getDiffTree(array $firstFileData, array $secondFileData, string $parent = ''): array
+function getDiffTree(array $firstFileData, array $secondFileData): array
 {
     $uniqKeys = array_unique(array_merge(array_keys($firstFileData), array_keys($secondFileData)));
     sort($uniqKeys);
 
-    return array_map(function ($key) use ($firstFileData, $secondFileData, $parent) {
+    return array_map(function ($key) use ($firstFileData, $secondFileData) {
         if (!array_key_exists($key, $secondFileData)) {
             return [
                 'name' => $key,
-                'parent' => $parent,
                 'type' => 'removed',
                 'value' => $firstFileData[$key]
             ];
@@ -43,15 +42,20 @@ function getDiffTree(array $firstFileData, array $secondFileData, string $parent
         if (!array_key_exists($key, $firstFileData)) {
             return [
                 'name' => $key,
-                'parent' => $parent,
                 'type' => 'added',
                 'value' => $secondFileData[$key]
+            ];
+        }
+        if (is_array($firstFileData[$key]) && is_array($secondFileData[$key])) {
+            return [
+                'name' => $key,
+                'type' => 'nested',
+                'children' => getDiffTree($firstFileData[$key], $secondFileData[$key])
             ];
         }
         if ($firstFileData[$key] !== $secondFileData[$key]) {
             return [
                 'name' => $key,
-                'parent' => $parent,
                 'type' => 'changed',
                 'valueFirst' => $firstFileData[$key],
                 'valueSecond' => $secondFileData[$key]
@@ -59,7 +63,6 @@ function getDiffTree(array $firstFileData, array $secondFileData, string $parent
         }
         return [
             'name' => $key,
-            'parent' => $parent,
             'type' => 'unchanged',
             'value' => $firstFileData[$key]
         ];

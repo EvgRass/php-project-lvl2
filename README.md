@@ -14,3 +14,6 @@ https://asciinema.org/a/gYFrxwsM6qbkm7074bOvXsG0r
 
 Плоский формат
 https://asciinema.org/a/BLajMcsGWlwOBl0LQKbOnhTh5
+
+Вывод в json
+https://asciinema.org/a/2H9kPfSOP7gNchzIjv3iUfC07
