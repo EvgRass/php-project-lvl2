@@ -6,7 +6,7 @@ use function Differ\Differ\getDiffTree;
 
 function plain(array $tree, $parents = ''): string
 {
-    // print_r($tree);die;
+    print_r(stringify(0));die;
     $acc = [];
     foreach ($tree as $k => $item) {
         $newParents = ($parents !== '') ? $parents . "." . $item['name'] : $item['name'];
@@ -40,7 +40,7 @@ function stringify($data)
     } elseif (!is_array($data)) {
         $str = trim(var_export($data, true), "'");
     }
-    if ($str === "true" || $str === "false" || $str === "null") {
+    if ($str === "true" || $str === "false" || $str === "null" || is_numeric($data)) {
         return $str;
     }
     return "'" . $str . "'";
